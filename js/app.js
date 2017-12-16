@@ -1,21 +1,32 @@
+import keywordService from './keywordService.js'
+import historyService from './historyService.js'
+import searchService from './searchService.js'
+
 new Vue({
   el: '#app',
   data: {
     tabs: ['추천 검색어', '최근 검색어'],
-    keywords: ['이탈리아', '세프의요리', '제철', '홈파티'],
-    history: ['검색기록0', '검색기록1', '검색기록2'],
+    keywords: [],
+    history: [],
+    searchResult: [],
     selectedTab: '',
-    query: ''
+    query: '',
+    submitted: false
   },
   created() {
-    this.selectedTab = this.tabs[1]
-
-    // todo keywordsService
-    // todo historyService
+    this.selectedTab = this.tabs[0]
+    this.fetchKeyword()
+    this.fetchHistory()
   },
   methods: {
-    onSearch() {
+    onSubmit(e) {
+      e.preventDefault()
       this.search()
+    },
+    onClickReset() {
+      this.query = ''
+      this.submitted = false
+      this.searchResult = []
     },
     onClickTab(tab) {
       this.selectedTab = tab
@@ -26,9 +37,21 @@ new Vue({
     },
     onClickRemoveHistory(keyword) {
       console.log('onClickRemoveHistory', keyword)
+      historyService.remove(keyword)
+      this.fetchHistory()
     },
     search() {
       console.log('search()', this.query)
+      this.submitted = true
+      searchService.list().then(data => this.searchResult = data)
+      historyService.add(this.query)
+      this.fetchHistory()
+    },
+    fetchKeyword() {
+      keywordService.list().then(data => this.keywords = data)
+    },
+    fetchHistory() {
+      historyService.list().then(data => this.history = data)
     }
   }
 })
