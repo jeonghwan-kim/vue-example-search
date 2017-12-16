@@ -8,7 +8,7 @@ new Vue({
     query: ''
   },
   created() {
-    this.selectedTab = this.tabs[0]
+    this.selectedTab = this.tabs[1]
 
     // todo keywordsService
     // todo historyService

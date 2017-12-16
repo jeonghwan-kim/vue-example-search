@@ -8,37 +8,39 @@
   <link rel="stylesheet" href="./style/style.css">
 </head>
 <body>
-  <div class="container">
+  <div>
     <header>
-      <h2>검색</h2>
+      <h2 class="container">검색</h2>
     </header>
-    <div id="app">
-      <input type="text" placeholder="검색어를 입력하세요." autofocus
-             v-model="query" v-on:keyup.13="onSearch()">
-      <ul>
-        <li v-for="tab in tabs"
-            v-on:click="onClickTab(tab)" 
-            v-bind:class="{active: tab === selectedTab}" >
-          {{tab}}
-        </li>
-      </ul>
-      <div v-if="selectedTab === tabs[0]">
-        <ul>
-          <li v-for="(keyword, index) in keywords"
-              v-on:click="onClickKeyword(keyword)">
-            {{index + 1}} {{keyword}}
+    <div id="app" class="container">
+      <input type="text" placeholder="검색어를 입력하세요." autofocus v-model="query" v-on:keyup.13="onSearch()">  
+
+      <div class="content">
+        <ul class="tabs">
+          <li v-for="tab in tabs" v-on:click="onClickTab(tab)" v-bind:class="{active: tab === selectedTab}">
+            {{tab}}
           </li>
         </ul>
+        
+        <div v-if="selectedTab === tabs[0]">
+          <ul class="list">
+            <li v-for="(keyword, index) in keywords" v-on:click="onClickKeyword(keyword)">
+              <span class="number">{{index + 1}}</span> {{keyword}}
+            </li>
+          </ul>
+        </div>
+        
+        <div v-if="selectedTab === tabs[1]">
+          <ul class="list">
+            <li v-for="keyword in history" v-on:click="onClickKeyword(keyword)">
+              {{keyword}} <span class="date">12.11</span>
+              <button class="btn-remove"
+                      v-on:click.stop="onClickRemoveHistory(keyword)"></button>
+            </li>
+          </ul>
+        </div>
+        </div>
       </div>
-      <div v-if="selectedTab === tabs[1]">
-        <ul>
-          <li v-for="keyword in history"
-              v-on:click="onClickKeyword(keyword)">
-            {{keyword}} 12.11 <button v-on:click.stop="onClickRemoveHistory(keyword)">X</button>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
   
   <script src="https://unpkg.com/vue"></script>
