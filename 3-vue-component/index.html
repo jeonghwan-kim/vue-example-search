@@ -24,36 +24,16 @@
           </ul>
 
           <div v-if="selectedTab === tabs[0]">
-            <ul class="list">
-              <li v-for="(keyword, index) in keywords" v-on:click="onClickKeyword(keyword)">
-                <span class="number">{{index + 1}}</span> {{keyword}}
-              </li>
-            </ul>
+            <keyword-list type="recommand" v-on:click-keyword="onClickKeyword"></keyword-list>
           </div>
           
           <div v-if="selectedTab === tabs[1]">
-            <ul class="list">
-              <li v-for="keyword in history" v-on:click="onClickKeyword(keyword)">
-                {{keyword}}
-                <span class="date">12.11</span>
-                <button class="btn-remove" v-on:click.stop="onClickRemoveHistory(keyword)"></button>
-              </li>
-            </ul>
+            <keyword-list type="history"v-on:click-keyword="onClickKeyword"></keyword-list>
           </div>
         </div>
 
         <div v-else>
-          <div v-if="searchResult.length">
-            <ul>
-              <li v-for="item in searchResult">
-                <img v-bind:src="item.image"> {{item.name}}
-              </li>
-            </ul>
-          </div>
-
-          <div v-else>
-             {{query}} 검색어로 찾을수 없습니다 
-          </div>
+          <search-result v-bind:data="searchResult"></search-result>
         </div>        
       </div>
     </div>
