@@ -1,15 +1,8 @@
-import keywordService from '../keywordService.js'
-import historyService from '../historyService.js'
+import keywordService from '../services/keyword.js'
+import historyService from '../services/history.js'
 
 export default {
-  template: `<ul class="list">
-              <li v-for="(keyword, index) in keywords" v-on:click="onClickKeyword(keyword)">
-                <span v-if="recommandType" class="number">{{index + 1}}</span>
-                  {{keyword}}
-                <span v-if="historyType" class="date">12.11</span>
-                <button v-if="historyType" class="btn-remove" v-on:click.stop="onClickRemoveHistory(keyword)"></button>
-              </li>
-            </ul>`,
+  template: '#keyword-list',
   props: ['type'],
   data() {
     return {

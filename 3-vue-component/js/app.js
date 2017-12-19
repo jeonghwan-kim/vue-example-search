@@ -1,5 +1,5 @@
-import historyService from './historyService.js'
-import searchService from './searchService.js'
+import historyService from './services/history.js'
+import searchService from './services/search.js'
 
 import searchForm from './components/searchForm.js'
 import searchResult from './components/searchResult.js'
@@ -11,7 +11,8 @@ new Vue({
     tabs: ['추천 검색어', '최근 검색어'],
     selectedTab: '',
     query: '',
-    submitted: false
+    submitted: false,
+    searchResult: []
   },
   components: {
     'search-form': searchForm,

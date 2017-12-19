@@ -1,16 +1,26 @@
 export default {
-  template: `<form v-on:submit="onSubmit">
-        <input type="text" placeholder="검색어를 입력하세요." autofocus v-model="query">
-        <button v-show="query.length" type="reset" class="btn-reset" v-on:click.stop="onClickReset"></button>
-      </form>`,
-  props: ['query'],
+  template: '#search-form',
+  props: ['value'],
+  computed: {
+    input() {
+      return this.value
+    }
+  },
+  created() {
+    console.log('created')
+  },
+  beforeUpdate() {
+    console.log('beforeUpdate')
+  },
+  updated() {
+    console.log('updated')
+  },
   methods: {
     onSubmit(e) {
       e.preventDefault()
-      this.$emit('submit', this.query.trim())
+      this.$emit('submit', this.input.trim())
     },
     onClickReset() {
-      this.query = ''
       this.$emit('reset')
     }
   }
