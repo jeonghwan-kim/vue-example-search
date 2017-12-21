@@ -1,6 +1,6 @@
-import SearchForm from './SearchFormController.js'
-import SearchResult from './SearchResultController.js'
-import SearchKeyword from './SearchKeywordController.js'
+import SearchFormView from '../views/SearchFormView.js'
+import SearchResultView from '../views/SearchResultView.js'
+import SearchKeywordView from '../views/SearchKeywordView.js'
 
 import SearchModel from '../models/SearchModel.js'
 import KeywordModel from '../models/KeywordModel.js'
@@ -9,15 +9,15 @@ const tag = '[MainController]'
 
 export default {
   init() {
-    SearchForm.init(document.querySelector('form'))
-    SearchForm.on('submitForm', this.onSubmit)
-    SearchForm.on('resetForm', this.onResetForm)
+    SearchFormView.init(document.querySelector('form'))
+    SearchFormView.on('submitForm', this.onSubmit)
+    SearchFormView.on('resetForm', this.onResetForm)
 
-    SearchResult.init(document.querySelector('#search-result'))
-    SearchKeyword.init(document.querySelector('#search-keyword'))    
-    SearchKeyword.on('clickKeyword', e => this.onClickKeyword(e))
+    SearchResultView.init(document.querySelector('#search-result'))
+    SearchKeywordView.init(document.querySelector('#search-keyword'))    
+    SearchKeywordView.on('clickKeyword', e => this.onClickKeyword(e))
 
-    KeywordModel.list().then(data => SearchKeyword.render(data))
+    KeywordModel.list().then(data => SearchKeywordView.render(data))
     
   },
   onSubmit(e) {
@@ -26,16 +26,16 @@ export default {
   },
   onResetForm(e) {
     console.log(tag, 'onResetForm')
-    SearchResult.reset()
+    SearchResultView.reset()
   },
   onClickKeyword(e) {
     console.log(tag, e.detail)
-    SearchForm.setValue(e.detail.keyword)
+    SearchFormView.setValue(e.detail.keyword)
     this.search(e.detail.keyword)
   },
   search(query) {
     SearchModel.list(query).then(data => {
-      SearchResult.render(data)
+      SearchResultView.render(data)
     })
   }
   
