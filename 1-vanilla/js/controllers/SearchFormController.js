@@ -29,6 +29,7 @@ export default {
     this.resetEl.addEventListener('click', e => {
       const evt = new CustomEvent('resetForm')
       this.el.dispatchEvent(evt)
+      this.showResetBtn(false)
     })
   }
 }

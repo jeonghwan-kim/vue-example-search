@@ -21,7 +21,7 @@
       </form>
   
       <div class="content">
-        <div v-if="!submitted">
+        <!-- <div>
           <ul class="tabs">
             <li v-for="tab in tabs" v-on:click="onClickTab(tab)" v-bind:class="{active: tab === selectedTab}">
               {{tab}}
@@ -45,21 +45,9 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
   
-        <div v-else>
-          <div v-if="searchResult.length">
-            <ul>
-              <li v-for="item in searchResult">
-                <img v-bind:src="item.image"> {{item.name}}
-              </li>
-            </ul>
-          </div>
-  
-          <div v-else>
-            {{query}} 검색어로 찾을수 없습니다
-          </div>
-        </div>
+        <div id="search-result"></div>
       </div>
     </div>
   </div>
