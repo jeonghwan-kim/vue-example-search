@@ -1,5 +1,9 @@
 export default {
-  data: ['검색기록0', '검색기록1', '검색기록2'],
+  data: [
+    { keyword: '검색기록2', date: '12.03' },
+    { keyword: '검색기록1', date: '12.02'},
+    { keyword: '검색기록0', date: '12.01' },
+  ],
 
   list() {
     return Promise.resolve(this.data)
@@ -8,14 +12,15 @@ export default {
   add(keyword = '') {
     keyword = keyword.trim()
     if (!keyword) return 
-    if (this.data.includes(keyword)) {
+    if (this.data.some(item => item.keyword === keyword)) {
       this.remove(keyword)
     }
 
-    this.data = [keyword, ...this.data]
+    const date = '12.31'
+    this.data = [{keyword, date}, ...this.data]
   },
   
   remove(keyword) {
-    this.data = this.data.filter(_keyword => _keyword !== keyword)
+    this.data = this.data.filter(item => item.keyword !== keyword)
   }
 }

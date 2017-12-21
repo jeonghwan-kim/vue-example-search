@@ -11,19 +11,16 @@ SearchResultView.setup = function (el) {
 }
 SearchResultView.render = function (data = []) {
   console.log(tag, 'render()', data)
-  this.el.innerHTML = data.length ? this._getSearchResultsHtml(data) : this._messages.NO_RESULT
+  this.el.innerHTML = data.length ? this.getSearchResultsHtml(data) : this._messages.NO_RESULT
+  this.show()
 }
-SearchResultView.reset = function () {
-  console.log(tag, 'reset()')
-  this.el.innerHTML = ''
-}
-SearchResultView._getSearchResultsHtml = function (data) {
+SearchResultView.getSearchResultsHtml = function (data) {
   return data.reduce((html, item) => {
-    html += this._getSearchItemHtml(item)
+    html += this.getSearchItemHtml(item)
     return html
   }, '<ul>') + '</ul>' 
 }
-SearchResultView._getSearchItemHtml = function(item) {
+SearchResultView.getSearchItemHtml = function(item) {
   return `<li>
       <img src="${item.image}">
       <p>${item.name}</p>
