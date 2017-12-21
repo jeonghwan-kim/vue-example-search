@@ -1,4 +1,4 @@
-const tag = '[SearchForm]'
+const tag = '[SearchFormController]'
 
 export default {
   init(el) {
@@ -21,6 +21,8 @@ export default {
       const enter = 13
       this.showResetBtn(this.inputEl.value.length)
       if (e.keyCode !== enter) return 
+
+      console.log(tag, 'enter')
       const evt = new CustomEvent('submitForm', {detail: {input: this.inputEl.value}})
       this.el.dispatchEvent(evt)
     })
