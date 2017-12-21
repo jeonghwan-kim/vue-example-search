@@ -5,6 +5,9 @@ body, ul {
 ul {
   list-style: none;
 }
+img {
+  width: 100%;
+}
 
 .container {
   margin: 0 15px 0 15px;
@@ -92,4 +95,13 @@ form {
 .btn-reset::before, 
 .btn-remove::before {
   content: 'X'
+}
+
+#search-result li {
+  display: flex;
+  margin-bottom: 15px;
+}
+#search-result img {
+  width: 30%;
+  height: 30%;
 }

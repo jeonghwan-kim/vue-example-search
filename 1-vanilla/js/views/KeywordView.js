@@ -1,37 +1,41 @@
 import View from './View.js'
 
-const tag = '[SearchKeywordView]'
+const tag = '[KeywordView]'
 
-const SearchKeywordView = Object.create(View)
-SearchKeywordView.messages = {
-  NO_KEYWORDS: 'NO_KEYWORDS'
+const KeywordView = Object.create(View)
+
+KeywordView.messages = {
+  NO_KEYWORDS: '추천 검색어가 없습니다'
 }
-SearchKeywordView.setup = function (el) {
+
+KeywordView.setup = function (el) {
   return this.init(el)
 }
-SearchKeywordView.render = function (data = []) {
+
+KeywordView.render = function (data = []) {
   this.el.innerHTML = data.length ? this.getKeywordsHtml(data) : this.messages.NO_KEYWORDS
   this.show()
   this.bindClickEvent()
   return this
 }
-SearchKeywordView.getKeywordsHtml = function (data) {
+
+KeywordView.getKeywordsHtml = function (data) {
   return data.reduce((html, keyword, index) => {
     html += `<li data-keyword="${keyword}"><span class="number">${index + 1}</span> ${keyword}</li>`
     return html
   }, '<ul class="list">') + '</ul>'
 }
-SearchKeywordView.bindClickEvent = function () {
+
+KeywordView.bindClickEvent = function () {
   Array.from(this.el.querySelectorAll('li')).forEach(el => {
-    el.addEventListener('click', e => {
-      this.onClickKeyword(e)
-    })
+    el.addEventListener('click', e => this.onClickKeyword(e))
   })
 }
-SearchKeywordView.onClickKeyword = function (e) {
+
+KeywordView.onClickKeyword = function (e) {
   const {keyword} = e.currentTarget.dataset
   console.log(tag, keyword)
-  this.emit('clickKeyword', { keyword })
+  this.emit('@click', { keyword })
 }
 
-export default SearchKeywordView
+export default KeywordView
