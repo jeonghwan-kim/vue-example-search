@@ -31,5 +31,9 @@ export default {
       this.el.dispatchEvent(evt)
       this.showResetBtn(false)
     })
+  },
+  setValue(value = '') {
+    this.inputEl.value = value
+    this.showResetBtn(this.inputEl.value.length)
   }
 }
