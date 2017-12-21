@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,47 +7,25 @@
   <title>Vue Example - Search</title>
   <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
   <div>
     <header>
       <h2 class="container">검색</h2>
     </header>
-    <div id="app" class="container">
+
+    <div class="container">
       <form>
         <input type="text" placeholder="검색어를 입력하세요." autofocus>
         <button type="reset" class="btn-reset"></button>
       </form>
   
       <div class="content">
+        <ul id="tabs" class="tabs">
+          <li>추천 검색어</li>
+          <li>최근 검색어</li>
+        </ul>
+      
         <div id="search-keyword"></div>
-        <!-- <div id="search-history"></div> -->
-        <!-- <div>
-          <ul class="tabs">
-            <li v-for="tab in tabs" v-on:click="onClickTab(tab)" v-bind:class="{active: tab === selectedTab}">
-              {{tab}}
-            </li>
-          </ul>
-  
-          <div v-if="selectedTab === tabs[0]">
-            <ul class="list">
-              <li v-for="(keyword, index) in keywords" v-on:click="onClickKeyword(keyword)">
-                <span class="number">{{index + 1}}</span> {{keyword}}
-              </li>
-            </ul>
-          </div>
-  
-          <div v-if="selectedTab === tabs[1]">
-            <ul class="list">
-              <li v-for="keyword in history" v-on:click="onClickKeyword(keyword)">
-                {{keyword}}
-                <span class="date">12.11</span>
-                <button class="btn-remove" v-on:click.stop="onClickRemoveHistory(keyword)"></button>
-              </li>
-            </ul>
-          </div>
-        </div> -->
-  
         <div id="search-result"></div>
       </div>
     </div>

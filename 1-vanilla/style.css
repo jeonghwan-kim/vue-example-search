@@ -28,6 +28,9 @@ input[type=text] {
 .content {
   border: 1px solid #ccc;
 }
+ul.tabs {
+  display: flex;
+}
 .tabs li {
   display: inline-block;
   width: 50%;
