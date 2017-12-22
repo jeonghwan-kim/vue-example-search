@@ -8,23 +8,18 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div>
+  <div id="app">
     <header>
       <h2 class="container">검색</h2>
     </header>
-    <div id="app" class="container">
+
+    <div class="container">
       <form v-on:submit="onSubmit">
         <input type="text" placeholder="검색어를 입력하세요." autofocus v-model="query">
         <button v-show="query.length" type="reset" class="btn-reset" v-on:click.stop="onClickReset"></button>
       </form>
       
       <div class="content">
-          <ul class="tabs">
-            <li>df</li>
-            <li>df</li>
-          </ul>
-        
-
         <div v-if="!submitted">
           <ul class="tabs">
             <li v-for="tab in tabs" v-on:click="onClickTab(tab)" v-bind:class="{active: tab === selectedTab}">
@@ -42,19 +37,19 @@
           
           <div v-if="selectedTab === tabs[1]">
             <ul class="list">
-              <li v-for="keyword in history" v-on:click="onClickKeyword(keyword)">
-                {{keyword}}
-                <span class="date">12.11</span>
-                <button class="btn-remove" v-on:click.stop="onClickRemoveHistory(keyword)"></button>
+              <li v-for="item in history" v-on:click="onClickKeyword(item.keyword)">
+                {{item.keyword}}
+                <span class="date">{{item.date}}</span>
+                <button class="btn-remove" v-on:click.stop="onClickRemoveHistory(item.keyword)"></button>
               </li>
             </ul>
           </div>
         </div>
 
         <div v-else>
-          <div v-if="searchResult.length">
+          <div v-if="result.length">
             <ul>
-              <li v-for="item in searchResult">
+              <li v-for="item in result">
                 <img v-bind:src="item.image"> {{item.name}}
               </li>
             </ul>

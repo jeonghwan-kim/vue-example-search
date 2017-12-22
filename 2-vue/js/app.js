@@ -1,6 +1,6 @@
-import keywordService from './keywordService.js'
-import historyService from './historyService.js'
-import searchService from './searchService.js'
+import KeywordModel from './models/KeywordModel.js'
+import HistoryModel from './models/HistoryModel.js'
+import SearchModel from './models/SearchModel.js'
 
 new Vue({
   el: '#app',
@@ -8,7 +8,7 @@ new Vue({
     tabs: ['추천 검색어', '최근 검색어'],
     keywords: [],
     history: [],
-    searchResult: [],
+    result: [],
     selectedTab: '',
     query: '',
     submitted: false
@@ -26,7 +26,7 @@ new Vue({
     onClickReset() {
       this.query = ''
       this.submitted = false
-      this.searchResult = []
+      this.result = []
     },
     onClickTab(tab) {
       this.selectedTab = tab
@@ -37,21 +37,21 @@ new Vue({
     },
     onClickRemoveHistory(keyword) {
       console.log('onClickRemoveHistory', keyword)
-      historyService.remove(keyword)
+      HistoryModel.remove(keyword)
       this.fetchHistory()
     },
     search() {
       console.log('search()', this.query)
       this.submitted = true
-      searchService.list().then(data => this.searchResult = data)
-      historyService.add(this.query)
+      SearchModel.list().then(data => this.result = data)
+      HistoryModel.add(this.query)
       this.fetchHistory()
     },
     fetchKeyword() {
-      keywordService.list().then(data => this.keywords = data)
+      KeywordModel.list().then(data => this.keywords = data)
     },
     fetchHistory() {
-      historyService.list().then(data => this.history = data)
+      HistoryModel.list().then(data => this.history = data)
     }
   }
 })
