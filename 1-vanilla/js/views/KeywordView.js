@@ -20,8 +20,8 @@ KeywordView.render = function (data = []) {
 }
 
 KeywordView.getKeywordsHtml = function (data) {
-  return data.reduce((html, keyword, index) => {
-    html += `<li data-keyword="${keyword}"><span class="number">${index + 1}</span> ${keyword}</li>`
+  return data.reduce((html, item, index) => {
+    html += `<li data-keyword="${item.keyword}"><span class="number">${index + 1}</span> ${item.keyword}</li>`
     return html
   }, '<ul class="list">') + '</ul>'
 }

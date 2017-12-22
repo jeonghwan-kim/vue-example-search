@@ -33,9 +33,9 @@
 
           <div v-if="selectedTab === tabs[0]">
             <ul class="list">
-              <li v-for="(keyword, index) in keywords" 
-                v-on:click="onClickKeyword(keyword)">
-                <span class="number">{{index + 1}}</span> {{keyword}}
+              <li v-for="(item, index) in keywords" 
+                v-on:click="onClickKeyword(item.keyword)">
+                <span class="number">{{index + 1}}</span> {{item.keyword}}
               </li>
             </ul>
           </div>

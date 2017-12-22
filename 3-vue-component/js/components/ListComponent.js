@@ -1,36 +1,23 @@
-import KeywordModel from '../models/KeywordModel.js'
-import historyService from '../models/HistoryModel.js'
+// import KeywordModel from '../models/KeywordModel.js'
+// import HistoryModel from '../models/HistoryModel.js'
 
 export default {
-  template: '#keyword-list',
-  props: ['type'],
-  data() {
-    return {
-      keywords: []
-    }
-  },
-  created() {
-    this.fetch()
-  },
+  template: '#list',
+  props: ['data', 'type'],
   computed: {
-    recommandType() {
-      return this.type === 'recommand'
+    recommendType() {
+      return this.type === 'recommend'
     },
     historyType() {
       return this.type === 'history'
-    },
+    }
   },
   methods: {
-    onClickKeyword(keyword) {
-      this.$emit('click-keyword', keyword)
+    onClickList(keyword) {
+      this.$emit('@click', keyword)
     },
-    onClickRemoveHistory(keyword) {
-      historyService.remove(keyword)
-      this.fetch()
-    },
-    fetch() {
-      const service = this.recommandType ? KeywordModel : historyService
-      service.list().then(data => this.keywords = data)
+    onRemoveHistory(keyword) {
+      this.$emit('@remove', keyword)
     }
   }
 }
