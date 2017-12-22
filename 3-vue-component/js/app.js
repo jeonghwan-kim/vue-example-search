@@ -1,9 +1,9 @@
-import historyService from './services/history.js'
-import searchService from './services/search.js'
+import HistoryModel from './models/HistoryModel.js'
+import searchService from './models/SearchModel.js'
 
-import searchForm from './components/searchForm.js'
-import searchResult from './components/searchResult.js'
-import keywordList from './components/keywordList.js'
+import FormComponent from './components/FormComponent.js'
+import ResultComponent from './components/ResultComponent.js'
+import ListComponent from './components/ListComponent.js'
 
 new Vue({
   el: '#app',
@@ -15,9 +15,9 @@ new Vue({
     searchResult: []
   },
   components: {
-    'search-form': searchForm,
-    'search-result': searchResult,
-    'keyword-list': keywordList,
+    'search-form': FormComponent,
+    'search-result': ResultComponent,
+    'keyword-list': ListComponent,
   },
   created() {
     this.selectedTab = this.tabs[0]
@@ -27,7 +27,7 @@ new Vue({
       this.query = query
       this.search()
     },
-    onClickReset() {
+    onReset() {
       this.query = ''
       this.submitted = false
       this.searchResult = []
@@ -40,10 +40,9 @@ new Vue({
       this.search()
     },
     search() {
-      console.log('search()', this.query)
       this.submitted = true
       searchService.list().then(data => this.searchResult = data)
-      historyService.add(this.query)
+      HistoryModel.add(this.query)
     },
   }
 })

@@ -13,22 +13,26 @@
       <h2 class="container">검색</h2>
     </header>
     <div class="container">
-      <search-form v-bind:value="query" v-on:submit="onSubmit" v-on:reset="onClickReset"></search-form>
+      <search-form v-bind:value="query" v-on:@submit="onSubmit" 
+        v-on:@reset="onReset"></search-form>
       
       <div class="content">
         <div v-if="!submitted">
           <ul class="tabs">
-            <li v-for="tab in tabs" v-on:click="onClickTab(tab)" v-bind:class="{active: tab === selectedTab}">
+            <li v-for="tab in tabs" v-on:click="onClickTab(tab)" 
+              v-bind:class="{active: tab === selectedTab}">
               {{tab}}
             </li>
           </ul>
 
           <div v-if="selectedTab === tabs[0]">
-            <keyword-list type="recommand" v-on:click-keyword="onClickKeyword"></keyword-list>
+            <keyword-list type="recommand" v-on:click-keyword="onClickKeyword">
+            </keyword-list>
           </div>
           
           <div v-if="selectedTab === tabs[1]">
-            <keyword-list type="history" v-on:click-keyword="onClickKeyword"></keyword-list>
+            <keyword-list type="history" v-on:click-keyword="onClickKeyword">
+            </keyword-list>
           </div>
         </div>
 
@@ -45,19 +49,23 @@
 </html>
 
 <template id="search-form">
-  <form v-on:submit="onSubmit">
-    <input type="text" placeholder="검색어를 입력하세요." autofocus v-bind:value="input">
-    <button v-show="input.length" type="reset" class="btn-reset" v-on:click.stop="onClickReset"></button>
+  <form v-on:submit.prevent="onSubmit">
+    <input type="text" placeholder="검색어를 입력하세요." autofocus 
+      v-model="input">
+    <button v-show="input.length" type="reset" class="btn-reset" 
+      v-on:click.stop="onReset"></button>
   </form>
 </template>
 
 <template id="keyword-list">
   <ul class="list">
-    <li v-for="(keyword, index) in keywords" v-on:click="onClickKeyword(keyword)">
+    <li v-for="(keyword, index) in keywords" 
+      v-on:click="onClickKeyword(keyword)">
       <span v-if="recommandType" class="number">{{index + 1}}</span>
       {{keyword}}
       <span v-if="historyType" class="date">12.11</span>
-      <button v-if="historyType" class="btn-remove" v-on:click.stop="onClickRemoveHistory(keyword)"></button>
+      <button v-if="historyType" class="btn-remove" 
+        v-on:click.stop="onClickRemoveHistory(keyword)"></button>
     </li>
   </ul>
 </template>

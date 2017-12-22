@@ -1,5 +1,5 @@
-import keywordService from '../services/keyword.js'
-import historyService from '../services/history.js'
+import KeywordModel from '../models/KeywordModel.js'
+import historyService from '../models/HistoryModel.js'
 
 export default {
   template: '#keyword-list',
@@ -29,7 +29,7 @@ export default {
       this.fetch()
     },
     fetch() {
-      const service = this.recommandType ? keywordService : historyService
+      const service = this.recommandType ? KeywordModel : historyService
       service.list().then(data => this.keywords = data)
     }
   }
