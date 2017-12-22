@@ -1,6 +1,3 @@
-// import KeywordModel from '../models/KeywordModel.js'
-// import HistoryModel from '../models/HistoryModel.js'
-
 export default {
   template: '#list',
   props: ['data', 'type'],

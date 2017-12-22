@@ -10,9 +10,9 @@
     {{query}} 검색어로 찾을수 없습니다
   </div>
 </template>
+
 <script>
 export default {
-  name: 'search-result',
   props: ['data', 'query']
 }
 </script>

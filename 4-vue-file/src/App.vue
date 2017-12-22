@@ -4,23 +4,31 @@
       <h2 class="container">검색</h2>
     </header>
     <div class="container">
-      <search-form v-bind:value="query" v-on:submit="onSubmit" v-on:reset="onClickReset"></search-form>
+      <search-form v-bind:value="query" v-on:@submit="onSubmit" 
+        v-on:@reset="onReset"></search-form>
+
       <div class="content">
         <div v-if="!submitted">
           <ul class="tabs">
-            <li v-for="tab in tabs" v-on:click="onClickTab(tab)" v-bind:class="{active: tab === selectedTab}">
+            <li v-for="tab in tabs" v-on:click="onChangeTab(tab)" 
+              v-bind:class="{active: tab === selectedTab}">
               {{tab}}
             </li>
           </ul>
 
           <div v-if="selectedTab === tabs[0]">
-            <keyword-list type="recommand" v-on:click-keyword="onClickKeyword"></keyword-list>
+            <list type="recommend" v-bind:data="keywords" 
+              v-on:@click="onClickKeyword">
+            </list>
           </div>
           
           <div v-if="selectedTab === tabs[1]">
-            <keyword-list type="history" v-on:click-keyword="onClickKeyword"></keyword-list>
+            <list type="history" v-bind:data="history" 
+              v-on:@click="onClickKeyword" v-on:@remove="onRemoveKeyword">
+            </list>
           </div>
         </div>
+
         <div v-else>
           <search-result v-bind:data="searchResult"></search-result>
         </div>        
@@ -30,12 +38,13 @@
 </template>
 
 <script>
-import historyService from './services/history.js'
-import searchService from './services/search.js'
+import HistoryModel from './models/HistoryModel.js'
+import SearchModel from './models/SearchModel.js'
+import KeywordModel from './models/KeywordModel.js'
 
-import SearchForm from './components/SearchForm.vue'
-import SearchResult from './components/SearchResult.vue'
-import KeywordList from './components/KeywordList.vue'
+import FormComponent from './components/FormComponent.vue'
+import ResultComponent from './components/ResultComponent.vue'
+import ListComponent from './components/ListComponent.vue'
 
 export default {
   name: 'app',
@@ -45,39 +54,54 @@ export default {
       selectedTab: '',
       query: '',
       submitted: false,
+      keywords: [],
+      history: [],
       searchResult: []
     }
   },
   components: {
-    SearchForm, SearchResult, KeywordList
+    'search-form': FormComponent, 
+    'search-result': ResultComponent, 
+    'list': ListComponent
   },
   created() {
     this.selectedTab = this.tabs[0]
+    this.fetchKeywords()
+    this.fetchHistory()
   },
   methods: {
     onSubmit(query) {
       this.query = query
       this.search()
     },
-    onClickReset() {
+    onReset() {
       this.query = ''
       this.submitted = false
       this.searchResult = []
     },
-    onClickTab(tab) {
+    onChangeTab(tab) {
       this.selectedTab = tab
     },
     onClickKeyword(keyword) {
       this.query = keyword;
       this.search()
     },
-    search() {
-      console.log('search()', this.query)
-      this.submitted = true
-      searchService.list().then(data => this.searchResult = data)
-      historyService.add(this.query)
+    onRemoveKeyword(keyword) {
+      HistoryModel.remove(keyword)
+      this.fetchHistory()
     },
+    search() {
+      this.submitted = true
+      SearchModel.list().then(data => this.searchResult = data)
+      HistoryModel.add(this.query)
+      this.fetchHistory()
+    },
+    fetchKeywords() {
+      KeywordModel.list().then(data => this.keywords = data)
+    },
+    fetchHistory() {
+      HistoryModel.list().then(data => this.history = data)
+    }
   }
 }
 </script>
-
